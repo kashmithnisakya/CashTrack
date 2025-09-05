@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { CashTrackLogo } from "@/components/CashTrackLogo";
 import { 
   Plus, 
+  Minus,
   TrendingUp, 
   TrendingDown, 
   DollarSign, 
@@ -61,6 +62,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
 
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+  const [defaultTransactionType, setDefaultTransactionType] = useState<"expense" | "income">("expense");
 
   const totalIncome = expenses
     .filter(e => e.type === "income")
@@ -104,6 +106,25 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   const cancelEdit = () => {
     setEditingExpense(null);
     setShowExpenseForm(false);
+  };
+
+  const handleExpenseAdded = () => {
+    // TODO: In the future, we could fetch the updated expense list from the API
+    // For now, we'll just close the form as the expense was successfully added to the backend
+    console.log('💰 Expense successfully added to backend!');
+    setShowExpenseForm(false);
+  };
+
+  const openExpenseForm = () => {
+    setEditingExpense(null);
+    setDefaultTransactionType("expense");
+    setShowExpenseForm(true);
+  };
+
+  const openIncomeForm = () => {
+    setEditingExpense(null);
+    setDefaultTransactionType("income");
+    setShowExpenseForm(true);
   };
 
   return (
@@ -218,18 +239,26 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
             <CardHeader className="flex flex-row items-center justify-between pb-6">
               <CardTitle className="text-2xl font-bold gradient-text">Transaction History</CardTitle>
-              <Button 
-                variant="hero" 
-                size="lg"
-                onClick={() => {
-                  setEditingExpense(null);
-                  setShowExpenseForm(true);
-                }}
-                className="bg-gradient-wealth shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-105"
-              >
-                <Plus className="w-5 h-5 mr-2" />
-                Add Transaction
-              </Button>
+              <div className="flex gap-3">
+                <Button 
+                  variant="success" 
+                  size="lg"
+                  onClick={openIncomeForm}
+                  className="bg-gradient-to-r from-success to-success/80 hover:from-success/90 hover:to-success/70 shadow-lg hover:shadow-success/25 transition-all duration-300 transform hover:scale-105"
+                >
+                  <Plus className="w-5 h-5 mr-2" />
+                  Add Income
+                </Button>
+                <Button 
+                  variant="wealth" 
+                  size="lg"
+                  onClick={openExpenseForm}
+                  className="bg-gradient-wealth shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-105"
+                >
+                  <Minus className="w-5 h-5 mr-2" />
+                  Add Expense
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -305,6 +334,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           expense={editingExpense}
           onSubmit={editingExpense ? handleEditExpense : handleAddExpense}
           onCancel={cancelEdit}
+          onExpenseAdded={handleExpenseAdded}
+          defaultType={editingExpense ? editingExpense.type : defaultTransactionType}
         />
       )}
     </div>

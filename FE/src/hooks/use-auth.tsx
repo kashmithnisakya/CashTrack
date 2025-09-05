@@ -114,6 +114,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Set auth token for future requests
       apiService.setAuthToken(response.token);
 
+      // Initialize user after successful login
+      try {
+        console.log('🔄 Initializing user after login...');
+        const initResponse = await apiService.initUser();
+        console.log('✅ User initialization successful:', initResponse);
+      } catch (initError) {
+        console.warn('⚠️ User initialization failed (continuing with login):', initError);
+        // Don't fail the login process if init_user fails
+      }
+
       setState({
         user: response.user,
         token: response.token,
@@ -208,6 +218,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       // Set auth token for future requests
       apiService.setAuthToken(loginResponse.token);
+
+      // Initialize user after successful registration and login
+      try {
+        console.log('🔄 Initializing user after registration...');
+        const initResponse = await apiService.initUser();
+        console.log('✅ User initialization successful after registration:', initResponse);
+      } catch (initError) {
+        console.warn('⚠️ User initialization failed (continuing with registration):', initError);
+        // Don't fail the registration process if init_user fails
+      }
 
       setState({
         user: loginResponse.user,

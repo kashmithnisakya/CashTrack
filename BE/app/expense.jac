@@ -11,7 +11,6 @@ enum ExpenseCategory {
     BILLS = "Bills",
     HEALTHCARE = "Healthcare",
     EDUCATION = "Education",
-    INCOME = "Income",
     OTHER = "Other"
 }
 

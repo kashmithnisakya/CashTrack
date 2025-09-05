@@ -1,10 +1,11 @@
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError } from '@/types/api';
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse } from '@/types/api';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 class ApiService {
   private baseUrl: string;
+  private authToken: string | null = null;
 
   constructor(baseUrl: string = API_BASE_URL) {
     this.baseUrl = baseUrl;
@@ -19,6 +20,7 @@ class ApiService {
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
+        ...(this.authToken && { Authorization: `Bearer ${this.authToken}` }),
         ...options.headers,
       },
       ...options,
@@ -121,11 +123,36 @@ class ApiService {
 
   // Utility method to set auth token for future requests
   setAuthToken(token: string | null) {
+    this.authToken = token;
     if (token) {
       console.log('🔑 Setting auth token for future requests');
     } else {
       console.log('🔓 Clearing auth token');
     }
+  }
+
+  // User initialization endpoint
+  async initUser(): Promise<any> {
+    console.log('👤 Initializing user...');
+    
+    return this.request<any>('/walker/init_user', {
+      method: 'POST',
+    });
+  }
+
+  // Expense endpoints
+  async addExpense(expenseData: ExpenseRequest): Promise<AddExpenseResponse> {
+    console.log('💰 Adding expense:', {
+      amount: expenseData.amount,
+      category: expenseData.category,
+      date: expenseData.date,
+      description: expenseData.description
+    });
+    
+    return this.request<AddExpenseResponse>('/walker/add_expense', {
+      method: 'POST',
+      body: JSON.stringify(expenseData),
+    });
   }
 
   // Future endpoints can be added here
