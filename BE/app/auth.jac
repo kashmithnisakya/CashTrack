@@ -1,3 +1,12 @@
+import from pymongo.errors { ConnectionFailure, DuplicateKeyError, OperationFailure }
+import from jac_cloud.jaseci.models { User }
+import from jac_cloud.jaseci.utils { Emailer, log_entry, log_exit, logger }
+import from jac_cloud.core.archetype { BulkWrite, NodeAnchor }
+import from jac_cloud.jaseci.security { create_code }
+import from fastapi { HTTPException, status }
+import from pydantic { EmailStr }
+
+
 walker registration {
     has email: EmailStr;
     has password: str;
