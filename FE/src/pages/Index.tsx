@@ -13,11 +13,16 @@ const Index = () => {
   const { toast } = useToast();
 
   const handleLogin = (email: string, password: string) => {
+    console.log('🔑 Login attempt:', { email, passwordLength: password.length });
+    
     // Demo login - in real app this would call your authentication API
-    setUser({
+    const userData = {
       name: email.split('@')[0],
       email: email
-    });
+    };
+    
+    console.log('✅ Login successful:', userData);
+    setUser(userData);
     
     toast({
       title: "Welcome back!",
@@ -26,11 +31,16 @@ const Index = () => {
   };
 
   const handleRegister = (email: string, password: string, name: string) => {
+    console.log('📝 Registration attempt:', { email, name, passwordLength: password.length });
+    
     // Demo registration - in real app this would call your authentication API
-    setUser({
+    const userData = {
       name: name,
       email: email
-    });
+    };
+    
+    console.log('✅ Registration successful:', userData);
+    setUser(userData);
     
     toast({
       title: "Account created!",
@@ -39,6 +49,7 @@ const Index = () => {
   };
 
   const handleLogout = () => {
+    console.log('🚪 User logging out');
     setUser(null);
     toast({
       title: "Logged out",

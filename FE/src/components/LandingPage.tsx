@@ -22,11 +22,13 @@ export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('👤 LandingPage: Login form submitted:', { email: loginEmail });
     onLogin(loginEmail, loginPassword);
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('👤 LandingPage: Registration form submitted:', { email: registerEmail, name: registerName });
     onRegister(registerEmail, registerPassword, registerName);
   };
 
@@ -86,7 +88,7 @@ export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
                       <TabsTrigger value="register">Register</TabsTrigger>
                     </TabsList>
                     
-                    <TabsContent value="login">
+                    <TabsContent value="login" className="min-h-[280px]">
                       <form onSubmit={handleLogin} className="space-y-4">
                         <div>
                           <Label htmlFor="email">Email</Label>
@@ -116,7 +118,7 @@ export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
                       </form>
                     </TabsContent>
                     
-                    <TabsContent value="register">
+                    <TabsContent value="register" className="min-h-[280px]">
                       <form onSubmit={handleRegister} className="space-y-4">
                         <div>
                           <Label htmlFor="name">Full Name</Label>
