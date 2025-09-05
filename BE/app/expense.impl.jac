@@ -17,7 +17,7 @@ impl add_expense.add_expense with expenses entry {
 impl add_expense.update_expense with expense entry {
     logger.debug(f"expenses | update_expense | Updating Expense: {here.expense_id}");
     here.amount = self.amount;
-    here.category = self.category;
+    here.category = self.category.value;
     here.date = self.date;
     here.description = self.description;
     here.created_at = datetime.now();

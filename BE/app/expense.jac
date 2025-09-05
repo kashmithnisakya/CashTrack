@@ -3,6 +3,18 @@ import from fastapi { HTTPException, status }
 import from jac_cloud.jaseci.utils.logger { logger }
 import from datetime { datetime }
 
+enum ExpenseCategory {
+    FOOD = "Food",
+    TRANSPORT = "Transportation",
+    ENTERTAINMENT = "Entertainment",
+    SHOPPING = "Shopping",
+    BILLS = "Bills",
+    HEALTHCARE = "Healthcare",
+    EDUCATION = "Education",
+    INCOME = "Income",
+    OTHER = "Other"
+}
+
 walker visit_expenses {
     class __specs__ {
         has tags: list = ["Expense APIs"];
@@ -14,7 +26,7 @@ walker visit_expenses {
 
 walker add_expense(visit_expenses) {
     has amount: float;
-    has category: str;
+    has category: ExpenseCategory;
     has date: datetime;
     has description: str;
 

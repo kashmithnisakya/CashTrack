@@ -6,31 +6,104 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { CashTrackLogo } from "@/components/CashTrackLogo";
-import { DollarSign, TrendingUp, Shield, BarChart3 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
+import { DollarSign, TrendingUp, Shield, BarChart3, Loader2 } from "lucide-react";
+import { ApiError } from "@/types/api";
 import heroImage from "@/assets/hero-image.jpg";
 
-interface LandingPageProps {
-  onLogin: (email: string, password: string) => void;
-  onRegister: (email: string, password: string, name: string) => void;
-}
-
-export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
+export function LandingPage() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [registerName, setRegisterName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { login, register, clearError } = useAuth();
+  const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('👤 LandingPage: Login form submitted:', { email: loginEmail });
-    onLogin(loginEmail, loginPassword);
+    
+    if (!loginEmail || !loginPassword) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    clearError();
+
+    try {
+      console.log('👤 LandingPage: Login form submitted:', { email: loginEmail });
+      await login({ email: loginEmail, password: loginPassword });
+      
+      toast({
+        title: "Welcome back!",
+        description: "You have successfully logged in.",
+      });
+      
+      // Reset form
+      setLoginEmail("");
+      setLoginPassword("");
+    } catch (error) {
+      const apiError = error as ApiError;
+      toast({
+        title: "Login Failed",
+        description: apiError.message || "Unable to log in. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('👤 LandingPage: Registration form submitted:', { email: registerEmail, name: registerName });
-    onRegister(registerEmail, registerPassword, registerName);
+    
+    if (!registerEmail || !registerPassword || !registerName) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    clearError();
+
+    try {
+      console.log('👤 LandingPage: Registration form submitted:', { email: registerEmail, name: registerName });
+      await register({ 
+        email: registerEmail, 
+        password: registerPassword, 
+        name: registerName 
+      });
+      
+      toast({
+        title: "Welcome to CashTrack!",
+        description: "Your account has been created successfully.",
+      });
+      
+      // Reset form
+      setRegisterEmail("");
+      setRegisterPassword("");
+      setRegisterName("");
+    } catch (error) {
+      const apiError = error as ApiError;
+      toast({
+        title: "Registration Failed",
+        description: apiError.message || "Unable to create account. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -124,8 +197,21 @@ export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
                             required
                           />
                         </div>
-                        <Button type="submit" variant="hero" className="w-full h-12 rounded-xl text-lg font-semibold shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-[1.02]" size="lg">
-                          Enter Dashboard
+                        <Button 
+                          type="submit" 
+                          variant="hero" 
+                          disabled={isSubmitting}
+                          className="w-full h-12 rounded-xl text-lg font-semibold shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" 
+                          size="lg"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                              Signing In...
+                            </>
+                          ) : (
+                            'Enter Dashboard'
+                          )}
                         </Button>
                       </form>
                     </TabsContent>
@@ -168,8 +254,21 @@ export function LandingPage({ onLogin, onRegister }: LandingPageProps) {
                             required
                           />
                         </div>
-                        <Button type="submit" variant="hero" className="w-full h-12 rounded-xl text-lg font-semibold bg-gradient-wealth shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-[1.02]" size="lg">
-                          Start Building Wealth
+                        <Button 
+                          type="submit" 
+                          variant="hero" 
+                          disabled={isSubmitting}
+                          className="w-full h-12 rounded-xl text-lg font-semibold bg-gradient-wealth shadow-wealth hover:shadow-hover transition-all duration-500 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" 
+                          size="lg"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                              Creating Account...
+                            </>
+                          ) : (
+                            'Start Building Wealth'
+                          )}
                         </Button>
                       </form>
                     </TabsContent>

@@ -1,67 +1,54 @@
-import { useState } from "react";
 import { LandingPage } from "@/components/LandingPage";
 import { Dashboard } from "@/components/Dashboard";
+import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 
-interface User {
+// Loading component
+const LoadingScreen = () => (
+  <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background flex items-center justify-center transition-colors duration-500">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary border-solid mx-auto mb-4"></div>
+      <p className="text-xl font-semibold text-muted-foreground">Loading CashTrack...</p>
+    </div>
+  </div>
+);
+
+interface DashboardUser {
   name: string;
   email: string;
 }
 
 const Index = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, isAuthenticated, isLoading, logout } = useAuth();
   const { toast } = useToast();
 
-  const handleLogin = (email: string, password: string) => {
-    console.log('🔑 Login attempt:', { email, passwordLength: password.length });
-    
-    // Demo login - in real app this would call your authentication API
-    const userData = {
-      name: email.split('@')[0],
-      email: email
-    };
-    
-    console.log('✅ Login successful:', userData);
-    setUser(userData);
-    
-    toast({
-      title: "Welcome back!",
-      description: "You have successfully logged in.",
-    });
-  };
-
-  const handleRegister = (email: string, password: string, name: string) => {
-    console.log('📝 Registration attempt:', { email, name, passwordLength: password.length });
-    
-    // Demo registration - in real app this would call your authentication API
-    const userData = {
-      name: name,
-      email: email
-    };
-    
-    console.log('✅ Registration successful:', userData);
-    setUser(userData);
-    
-    toast({
-      title: "Account created!",
-      description: "Welcome to CashTrack. Start tracking your expenses now.",
-    });
-  };
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   const handleLogout = () => {
     console.log('🚪 User logging out');
-    setUser(null);
+    logout();
     toast({
       title: "Logged out",
       description: "You have been successfully logged out.",
     });
   };
 
-  if (user) {
-    return <Dashboard user={user} onLogout={handleLogout} />;
+  // If authenticated, show dashboard
+  if (isAuthenticated && user) {
+    // Convert API user to dashboard user format
+    const dashboardUser: DashboardUser = {
+      name: user.email.split('@')[0], // Use email prefix as name for now
+      email: user.email
+    };
+
+    return <Dashboard user={dashboardUser} onLogout={handleLogout} />;
   }
 
-  return <LandingPage onLogin={handleLogin} onRegister={handleRegister} />;
+  // Otherwise, show landing page with login/register
+  return <LandingPage />;
 };
 
 export default Index;
