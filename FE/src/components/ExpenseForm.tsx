@@ -69,45 +69,46 @@ export function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="w-full max-w-md shadow-glow border-0">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>
-            {expense ? "Edit Transaction" : "Add New Transaction"}
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <Card className="w-full max-w-lg shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
+        <CardHeader className="flex flex-row items-center justify-between pb-6">
+          <CardTitle className="text-2xl font-bold gradient-text">
+            {expense ? "Edit Transaction" : "Create New Transaction"}
           </CardTitle>
-          <Button variant="ghost" size="sm" onClick={onCancel}>
-            <X className="w-4 h-4" />
+          <Button variant="ghost" size="icon" onClick={onCancel} className="hover:bg-destructive/10 hover:text-destructive rounded-full">
+            <X className="w-5 h-5" />
           </Button>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="type">Type</Label>
+        <CardContent className="px-8 pb-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="type" className="text-sm font-semibold text-foreground/80">Transaction Type</Label>
               <Select value={type} onValueChange={(value: "expense" | "income") => setType(value)}>
-                <SelectTrigger>
+                <SelectTrigger className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="expense">Expense</SelectItem>
-                  <SelectItem value="income">Income</SelectItem>
+                <SelectContent className="rounded-xl border-2">
+                  <SelectItem value="expense" className="rounded-lg font-medium">💸 Expense</SelectItem>
+                  <SelectItem value="income" className="rounded-lg font-medium">💰 Income</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="title">Title</Label>
+            <div className="space-y-2">
+              <Label htmlFor="title" className="text-sm font-semibold text-foreground/80">Transaction Title</Label>
               <Input
                 id="title"
                 type="text"
-                placeholder="Enter transaction title"
+                placeholder="e.g., Grocery Shopping, Salary, Coffee"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300"
                 required
               />
             </div>
 
-            <div>
-              <Label htmlFor="amount">Amount</Label>
+            <div className="space-y-2">
+              <Label htmlFor="amount" className="text-sm font-semibold text-foreground/80">Amount ($)</Label>
               <Input
                 id="amount"
                 type="number"
@@ -115,43 +116,60 @@ export function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseFormProps) {
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300 text-lg font-semibold"
                 required
               />
             </div>
 
-            <div>
-              <Label htmlFor="category">Category</Label>
+            <div className="space-y-2">
+              <Label htmlFor="category" className="text-sm font-semibold text-foreground/80">Category</Label>
               <Select value={category} onValueChange={setCategory} required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a category" />
+                <SelectTrigger className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300">
+                  <SelectValue placeholder="Choose a category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-2">
                   {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                    <SelectItem key={cat} value={cat} className="rounded-lg font-medium">
+                      {cat === 'Food' && '🍽️'} {cat === 'Transportation' && '🚗'} 
+                      {cat === 'Entertainment' && '🎬'} {cat === 'Shopping' && '🛍️'} 
+                      {cat === 'Bills' && '📄'} {cat === 'Healthcare' && '🏥'} 
+                      {cat === 'Education' && '📚'} {cat === 'Income' && '💰'} 
+                      {cat === 'Other' && '📦'} {cat}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="date">Date</Label>
+            <div className="space-y-2">
+              <Label htmlFor="date" className="text-sm font-semibold text-foreground/80">Transaction Date</Label>
               <Input
                 id="date"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300"
                 required
               />
             </div>
 
-            <div className="flex gap-2 pt-4">
-              <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
+            <div className="flex gap-4 pt-8">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={onCancel} 
+                size="lg"
+                className="flex-1 h-12 rounded-xl font-semibold"
+              >
                 Cancel
               </Button>
-              <Button type="submit" variant="hero" className="flex-1">
-                {expense ? "Update" : "Add"} Transaction
+              <Button 
+                type="submit" 
+                variant={type === 'income' ? 'success' : 'wealth'} 
+                size="lg"
+                className="flex-1 h-12 rounded-xl font-bold"
+              >
+                {expense ? "💾 Update" : "✨ Create"} Transaction
               </Button>
             </div>
           </form>

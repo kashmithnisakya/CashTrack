@@ -2,111 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CashTrack Design System - Modern Expense Tracking App */
+/* CashTrack Design System - Premium Financial Tracking App */
 
 @layer base {
   :root {
-    --background: 248 50% 98%;
-    --foreground: 231 28% 15%;
+    /* Enhanced Background System */
+    --background: 250 50% 99%;
+    --background-secondary: 248 60% 96%;
+    --foreground: 231 30% 12%;
 
+    /* Refined Card System */
     --card: 0 0% 100%;
-    --card-foreground: 231 28% 15%;
+    --card-foreground: 231 30% 12%;
+    --card-secondary: 248 60% 98%;
 
+    /* Popover System */
     --popover: 0 0% 100%;
-    --popover-foreground: 231 28% 15%;
+    --popover-foreground: 231 30% 12%;
 
-    /* Primary - Modern Teal for Financial Trust */
-    --primary: 183 100% 32%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 183 85% 45%;
+    /* Premium Color Palette for Finance App */
+    /* Deep Emerald for Trust & Money */
+    --primary: 158 75% 35%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 158 65% 45%;
+    --primary-glow: 158 85% 55%;
 
-    /* Secondary - Success Green */
-    --secondary: 142 69% 58%;
-    --secondary-foreground: 0 0% 100%;
+    /* Rich Gold for Success & Wealth */
+    --secondary: 45 85% 55%;
+    --secondary-foreground: 45 90% 15%;
+    --secondary-light: 45 75% 65%;
 
-    /* Muted - Cool Gray */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-
-    /* Accent - Vibrant Orange for CTAs */
-    --accent: 32 95% 60%;
+    /* Sophisticated Purple for Premium Feel */
+    --accent: 262 75% 65%;
     --accent-foreground: 0 0% 100%;
+    --accent-light: 262 65% 75%;
 
-    /* Destructive - Warm Red */
-    --destructive: 0 72% 51%;
+    /* Refined Grays */
+    --muted: 225 15% 96%;
+    --muted-foreground: 225 10% 45%;
+    --muted-dark: 225 15% 88%;
+
+    /* Enhanced Status Colors */
+    --success: 142 75% 50%;
+    --success-foreground: 0 0% 100%;
+    --warning: 35 95% 58%;
+    --warning-foreground: 35 90% 15%;
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 183 100% 32%;
+    /* Sophisticated Borders & Inputs */
+    --border: 225 20% 90%;
+    --input: 225 20% 94%;
+    --ring: 158 75% 35%;
 
-    /* Custom Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(183 100% 32%), hsl(183 85% 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(183 100% 32%), hsl(142 69% 58%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    /* Premium Gradient System */
+    --gradient-primary: linear-gradient(135deg, hsl(158 75% 35%), hsl(158 85% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(158 75% 35%), hsl(262 75% 65%), hsl(45 85% 55%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(248 60% 98%));
+    --gradient-wealth: linear-gradient(135deg, hsl(45 85% 55%), hsl(35 95% 58%));
+    --gradient-success: linear-gradient(135deg, hsl(142 75% 50%), hsl(158 75% 35%));
+    --gradient-premium: linear-gradient(135deg, hsl(262 75% 65%), hsl(280 75% 75%));
     
-    --shadow-elegant: 0 4px 20px -4px hsl(183 100% 32% / 0.15);
-    --shadow-card: 0 2px 10px -2px hsl(220 9% 46% / 0.1);
-    --shadow-glow: 0 0 20px hsl(183 85% 45% / 0.3);
+    /* Enhanced Shadow System */
+    --shadow-elegant: 0 8px 32px -8px hsl(158 75% 35% / 0.2);
+    --shadow-card: 0 4px 24px -4px hsl(225 10% 45% / 0.12);
+    --shadow-glow: 0 0 32px hsl(158 85% 55% / 0.4);
+    --shadow-premium: 0 12px 48px -12px hsl(262 75% 65% / 0.25);
+    --shadow-wealth: 0 8px 32px -8px hsl(45 85% 55% / 0.3);
+    --shadow-hover: 0 16px 64px -16px hsl(158 75% 35% / 0.3);
 
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Smooth Animation System */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elegant: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    --radius: 0.5rem;
+    /* Enhanced Border Radius */
+    --radius: 0.75rem;
+    --radius-large: 1.25rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    /* Sidebar System */
+    --sidebar-background: 248 60% 98%;
+    --sidebar-foreground: 231 30% 15%;
+    --sidebar-primary: 158 75% 35%;
     --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 248 60% 94%;
+    --sidebar-accent-foreground: 231 30% 15%;
+    --sidebar-border: 225 20% 90%;
+    --sidebar-ring: 158 75% 35%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark Mode - Premium Finance Theme */
+    --background: 222 50% 3%;
+    --background-secondary: 224 50% 5%;
+    --foreground: 210 50% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 224 50% 5%;
+    --card-foreground: 210 50% 95%;
+    --card-secondary: 226 50% 7%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 224 50% 5%;
+    --popover-foreground: 210 50% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Dark Primary - Bright Emerald */
+    --primary: 158 85% 55%;
+    --primary-foreground: 222 50% 8%;
+    --primary-light: 158 75% 65%;
+    --primary-glow: 158 95% 65%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Dark Gold */
+    --secondary: 45 95% 65%;
+    --secondary-foreground: 45 100% 8%;
+    --secondary-light: 45 85% 75%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Dark Purple */
+    --accent: 262 85% 75%;
+    --accent-foreground: 262 100% 8%;
+    --accent-light: 262 75% 85%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 226 50% 10%;
+    --muted-foreground: 226 30% 65%;
+    --muted-dark: 226 50% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 85% 60%;
+    --success-foreground: 142 100% 8%;
+    --warning: 35 100% 68%;
+    --warning-foreground: 35 100% 8%;
+    --destructive: 0 85% 65%;
+    --destructive-foreground: 0 100% 8%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 226 50% 15%;
+    --input: 226 50% 12%;
+    --ring: 158 85% 55%;
+
+    /* Dark Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(158 85% 55%), hsl(158 95% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(158 85% 55%), hsl(262 85% 75%), hsl(45 95% 65%));
+    --gradient-card: linear-gradient(145deg, hsl(224 50% 5%), hsl(226 50% 8%));
+    --gradient-wealth: linear-gradient(135deg, hsl(45 95% 65%), hsl(35 100% 68%));
+    --gradient-success: linear-gradient(135deg, hsl(142 85% 60%), hsl(158 85% 55%));
+    --gradient-premium: linear-gradient(135deg, hsl(262 85% 75%), hsl(280 85% 85%));
+
+    /* Dark Shadows */
+    --shadow-elegant: 0 8px 32px -8px hsl(0 0% 0% / 0.6);
+    --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 32px hsl(158 95% 65% / 0.6);
+    --shadow-premium: 0 12px 48px -12px hsl(262 85% 75% / 0.5);
+    --shadow-wealth: 0 8px 32px -8px hsl(45 95% 65% / 0.5);
+    --shadow-hover: 0 16px 64px -16px hsl(158 85% 55% / 0.6);
   }
 }
 
@@ -116,6 +159,72 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Enhanced Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+@layer components {
+  /* Utility Classes for Enhanced Design */
+  .glass-effect {
+    backdrop-filter: blur(16px);
+    background: hsl(var(--card) / 0.8);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .wealth-glow {
+    box-shadow: var(--shadow-wealth);
+  }
+
+  .premium-glow {
+    box-shadow: var(--shadow-premium);
+  }
+
+  .success-glow {
+    box-shadow: 0 0 24px hsl(var(--success) / 0.4);
+  }
+
+  .gradient-text {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes glow {
+    from { box-shadow: var(--shadow-glow); }
+    to { box-shadow: var(--shadow-hover); }
   }
 }
