@@ -73,12 +73,12 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
   }
 
   // Custom tooltip component
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; color: string }>; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border border-slate-200 dark:border-slate-600 rounded-lg p-3 shadow-xl">
           <p className="text-slate-700 dark:text-slate-300 font-semibold mb-2 text-sm">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index: number) => (
             <div key={index} className="flex items-center gap-2 mb-1">
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
               <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
@@ -206,8 +206,8 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
                     ))}
                   </Pie>
                   <Tooltip 
-                    formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'Amount']}
-                    labelFormatter={(label) => `Category: ${label}`}
+                    formatter={(value: number) => [`$${value.toFixed(2)}`, 'Amount']}
+                    labelFormatter={(label: string) => `Category: ${label}`}
                   />
                 </PieChart>
               </ResponsiveContainer>

@@ -146,10 +146,10 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-purple-900/20 transition-all duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/40 via-indigo-50/60 to-purple-50/40 dark:from-slate-900 dark:via-slate-800 dark:to-purple-900/20 transition-all duration-500">
       {/* Header */}
-      <header className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-indigo-700/90 backdrop-blur-xl"></div>
+      <header className="relative bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/95 via-indigo-600/95 to-purple-600/95 backdrop-blur-xl"></div>
         <div className="relative container mx-auto px-8 py-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-6">
