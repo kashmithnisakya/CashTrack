@@ -146,96 +146,143 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-purple-900/20 transition-all duration-500">
       {/* Header */}
-      <header className="bg-gradient-primary shadow-elegant backdrop-blur-sm bg-opacity-95">
-        <div className="container mx-auto px-6 py-6 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <CashTrackLogo 
-              size={48} 
-              variant="full"
-              className="text-3xl text-primary-foreground drop-shadow-lg"
-            />
-          </div>
-          
-          <div className="flex items-center gap-6">
-            <div className="text-primary-foreground text-right">
-              <p className="font-semibold text-lg">{user.name}</p>
-              <p className="text-sm opacity-80">{user.email}</p>
+      <header className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-indigo-700/90 backdrop-blur-xl"></div>
+        <div className="relative container mx-auto px-8 py-8">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-6">
+              <div className="relative">
+                <CashTrackLogo 
+                  size={52} 
+                  variant="full"
+                  className="text-4xl text-white drop-shadow-2xl"
+                />
+                <div className="absolute -inset-2 bg-white/20 rounded-full blur-xl opacity-50"></div>
+              </div>
+              <div className="hidden md:block">
+                <h1 className="text-2xl font-bold text-white/95 tracking-tight">Dashboard</h1>
+                <p className="text-white/70 text-sm">Manage your financial future</p>
+              </div>
             </div>
-            <ThemeToggle />
-            <Button 
-              variant="outline" 
-              size="lg"
-              onClick={onLogout}
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm transition-all duration-300"
-            >
-              <LogOut className="w-5 h-5 mr-2" />
-              Logout
-            </Button>
+            
+            <div className="flex items-center gap-6">
+              <div className="relative bg-white/10 backdrop-blur-md rounded-xl px-6 py-3 border border-white/20 shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 rounded-xl"></div>
+                <div className="relative text-white text-right">
+                  <p className="font-bold text-lg tracking-wide">{user.name}</p>
+                  <p className="text-sm text-white/80 font-medium">{user.email}</p>
+                </div>
+              </div>
+              <ThemeToggle />
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={onLogout}
+                className="bg-white/15 hover:bg-white/25 border-white/30 hover:border-white/40 text-white backdrop-blur-md transition-all duration-300 shadow-lg hover:shadow-xl font-semibold"
+              >
+                <LogOut className="w-5 h-5 mr-2" />
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-8 py-16">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <Card className={`shadow-premium hover:shadow-hover transition-all duration-500 border-0 ${balance >= 0 ? 'wealth-glow' : 'shadow-card'} group cursor-pointer`}>
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-lg font-semibold text-muted-foreground">Portfolio Balance</CardTitle>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {/* Portfolio Balance Card */}
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-blue-50/50 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className={`absolute inset-0 bg-gradient-to-br ${balance >= 0 ? 'from-emerald-400/10 via-green-400/5 to-teal-400/10' : 'from-red-400/10 via-orange-400/5 to-pink-400/10'} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+            <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
+              <div>
+                <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Portfolio Balance</CardTitle>
+                <div className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${balance >= 0 ? 'bg-gradient-to-r from-emerald-400 to-green-500' : 'bg-gradient-to-r from-red-400 to-pink-500'} animate-pulse`}></div>
+                  <span className={`text-xs font-semibold ${balance >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {balance >= 0 ? 'GROWING' : 'DEFICIT'}
+                  </span>
+                </div>
+              </div>
               <div className="relative">
-                <DollarSign className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
-                <div className="absolute -inset-2 bg-primary/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className={`absolute inset-0 bg-gradient-to-r ${balance >= 0 ? 'from-emerald-400 to-green-500' : 'from-red-400 to-pink-500'} rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500`}></div>
+                <div className={`relative w-12 h-12 bg-gradient-to-r ${balance >= 0 ? 'from-emerald-400 to-green-500' : 'from-red-400 to-pink-500'} rounded-full flex items-center justify-center shadow-lg`}>
+                  <DollarSign className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className={`text-4xl font-bold mb-2 ${balance >= 0 ? 'text-secondary' : 'text-destructive'}`}>
-                ${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+            <CardContent className="relative pt-0 pb-8">
+              <div className={`text-4xl font-black mb-4 bg-gradient-to-r ${balance >= 0 ? 'from-emerald-600 to-green-600' : 'from-red-600 to-pink-600'} bg-clip-text text-transparent`}>
+                ${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
-              <div className="flex items-center text-sm font-medium">
+              <div className="flex items-center text-sm font-bold">
                 {balance >= 0 ? (
-                  <TrendingUp className="w-5 h-5 mr-2 text-success" />
+                  <TrendingUp className="w-4 h-4 mr-2 text-emerald-500" />
                 ) : (
-                  <TrendingDown className="w-5 h-5 mr-2 text-destructive" />
+                  <TrendingDown className="w-4 h-4 mr-2 text-red-500" />
                 )}
-                <span className={balance >= 0 ? 'text-success' : 'text-destructive'}>
-                  {balance >= 0 ? 'Growing Wealth' : 'Needs Attention'}
+                <span className={balance >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}>
+                  {balance >= 0 ? 'Wealth Growing' : 'Needs Attention'}
                 </span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 success-glow group cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-lg font-semibold text-muted-foreground">Monthly Income</CardTitle>
+          {/* Income Card */}
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-emerald-50/30 to-green-50/50 dark:from-slate-800 dark:via-emerald-900/20 dark:to-green-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-green-400/5 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
+              <div>
+                <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Total Income</CardTitle>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-r from-emerald-400 to-green-500 animate-pulse"></div>
+                  <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">ACTIVE</span>
+                </div>
+              </div>
               <div className="relative">
-                <TrendingUp className="h-6 w-6 text-success group-hover:text-success-light transition-colors" />
-                <div className="absolute -inset-2 bg-success/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
+                <div className="relative w-12 h-12 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-lg">
+                  <TrendingUp className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold text-success mb-2">
+            <CardContent className="relative pt-0 pb-8">
+              <div className="text-4xl font-black mb-4 bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
                 ${totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
-              <p className="text-sm font-medium text-success/80">
+              <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span>
                 Revenue Stream Active
               </p>
             </CardContent>
           </Card>
 
-          <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 group cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-lg font-semibold text-muted-foreground">Monthly Expenses</CardTitle>
+          {/* Expenses Card */}
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-orange-50/30 to-amber-50/50 dark:from-slate-800 dark:via-orange-900/20 dark:to-amber-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 via-amber-400/5 to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
+              <div>
+                <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Total Expenses</CardTitle>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-400 to-amber-500 animate-pulse"></div>
+                  <span className="text-xs font-semibold text-orange-600 dark:text-orange-400">TRACKING</span>
+                </div>
+              </div>
               <div className="relative">
-                <TrendingDown className="h-6 w-6 text-warning group-hover:text-warning-light transition-colors" />
-                <div className="absolute -inset-2 bg-warning/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-amber-500 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
+                <div className="relative w-12 h-12 bg-gradient-to-r from-orange-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                  <TrendingDown className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold text-warning mb-2">
+            <CardContent className="relative pt-0 pb-8">
+              <div className="text-4xl font-black mb-4 bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                 ${totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
-              <p className="text-sm font-medium text-warning/80">
+              <p className="text-sm font-bold text-orange-600 dark:text-orange-400 flex items-center">
+                <span className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></span>
                 Cost Management
               </p>
             </CardContent>
@@ -244,92 +291,133 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Chart */}
-          <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-2xl font-bold gradient-text">Wealth Analytics</CardTitle>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-slate-50/50 to-indigo-50/30 dark:from-slate-800 dark:via-slate-700 dark:to-indigo-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-400/5 via-purple-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <CardHeader className="relative pb-8 pt-8">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-2xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
+                    Wealth Analytics
+                  </CardTitle>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Track your financial growth</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
+                  <div className="relative w-10 h-10 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                    <TrendingUp className="h-5 w-5 text-white" />
+                  </div>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative">
               <ExpenseChart expenses={expenses} />
             </CardContent>
           </Card>
 
           {/* Income Section */}
-          <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-6">
-              <CardTitle className="text-2xl font-bold gradient-text text-success">Income</CardTitle>
-              <div className="flex gap-3">
+          <Card className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-green-50/50 to-teal-50/30 dark:from-emerald-900/20 dark:via-green-900/20 dark:to-teal-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-green-400/5 to-teal-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
+              <div>
+                <CardTitle className="text-2xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-2">
+                  Income Stream
+                </CardTitle>
+                <p className="text-emerald-700 dark:text-emerald-300 text-sm font-bold">💰 Revenue Sources</p>
+              </div>
+              <div className="flex gap-2">
                 <Button 
                   variant="ghost" 
                   size="sm"
                   onClick={() => refreshIncomes()}
                   disabled={incomesLoading}
-                  className="hover:bg-primary/10"
+                  className="hover:bg-emerald-100 dark:hover:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-700 shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <RefreshCw className={`w-4 h-4 mr-1 ${incomesLoading ? 'animate-spin' : ''}`} />
                   Refresh
                 </Button>
                 <Button 
-                  variant="success" 
                   size="sm"
                   onClick={openIncomeForm}
-                  className="bg-gradient-to-r from-success to-success/80 hover:from-success/90 hover:to-success/70 shadow-lg hover:shadow-success/25 transition-all duration-300"
+                  className="bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 hover:from-emerald-600 hover:via-green-600 hover:to-emerald-700 text-white shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 font-bold"
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Add
+                  Add Income
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3 max-h-96 overflow-y-auto">
+            <CardContent className="relative">
+              <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
                 {incomesLoading && apiIncomes.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <RefreshCw className="w-12 h-12 mx-auto mb-2 opacity-50 animate-spin" />
-                    <p className="text-sm font-semibold">Loading incomes...</p>
+                  <div className="text-center py-12">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-emerald-400 rounded-full blur-xl opacity-20 animate-pulse"></div>
+                      <RefreshCw className="relative w-16 h-16 mx-auto mb-4 text-emerald-400 animate-spin" />
+                    </div>
+                    <p className="text-emerald-600 dark:text-emerald-400 font-bold">Loading incomes...</p>
+                    <p className="text-emerald-500 dark:text-emerald-500 text-sm">Fetching your revenue data</p>
                   </div>
                 )}
                 
                 {incomesError && apiIncomes.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <DollarSign className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm font-semibold text-destructive">Failed to load incomes</p>
+                  <div className="text-center py-12">
+                    <DollarSign className="w-16 h-16 mx-auto mb-4 text-red-400 opacity-60" />
+                    <p className="text-red-600 dark:text-red-400 font-bold mb-3">Failed to load incomes</p>
                     <Button 
                       variant="outline" 
                       size="sm"
                       onClick={() => refreshIncomes()}
-                      className="mt-2"
+                      className="border-emerald-300 text-emerald-600 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
                     >
+                      <RefreshCw className="w-4 h-4 mr-2" />
                       Try again
                     </Button>
                   </div>
                 )}
                 
                 {!incomesLoading && !incomesError && apiIncomes.map((income) => (
-                  <div key={income.income_id} className="group flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-success/5 to-success/10 hover:from-success/10 hover:to-success/15 border border-success/20 hover:border-success/40 transition-all duration-300">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-semibold text-sm group-hover:text-success transition-colors">{income.description}</h4>
+                  <div key={income.income_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-50 via-green-50 to-emerald-50/80 dark:from-emerald-950/30 dark:via-green-950/30 dark:to-emerald-950/30 border border-emerald-200/50 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-500 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/5 to-green-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative flex items-center justify-between p-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full animate-pulse"></div>
+                          <h4 className="font-bold text-slate-700 dark:text-slate-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-base">{income.description}</h4>
+                        </div>
+                        <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                          <Calendar className="w-3 h-3" />
+                          <span className="text-xs font-semibold">{new Date(income.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="w-3 h-3" />
-                        <span>{new Date(income.date).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric'
-                        })}</span>
+                      <div className="text-right">
+                        <div className="relative">
+                          <span className="text-xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                            +${income.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-lg font-bold text-success">
-                        +${income.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                      </span>
                     </div>
                   </div>
                 ))}
                 
                 {!incomesLoading && !incomesError && apiIncomes.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <DollarSign className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm font-semibold">No income yet</p>
-                    <p className="text-xs">Add your first income</p>
+                  <div className="text-center py-12">
+                    <div className="relative mb-6">
+                      <div className="absolute inset-0 bg-emerald-400 rounded-full blur-xl opacity-10"></div>
+                      <DollarSign className="relative w-16 h-16 mx-auto text-emerald-400 opacity-60" />
+                    </div>
+                    <p className="text-emerald-600 dark:text-emerald-400 font-bold text-lg mb-2">No income streams yet</p>
+                    <p className="text-emerald-500 dark:text-emerald-500 text-sm mb-4">Start building your wealth by adding income sources</p>
+                    <Button 
+                      onClick={openIncomeForm}
+                      className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white shadow-lg hover:shadow-emerald-500/25 transition-all duration-300"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add First Income
+                    </Button>
                   </div>
                 )}
               </div>
@@ -337,88 +425,115 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </Card>
 
           {/* Expenses Section */}
-          <Card className="shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-6">
-              <CardTitle className="text-2xl font-bold gradient-text text-warning">Expenses</CardTitle>
-              <div className="flex gap-3">
+          <Card className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-amber-50/50 to-yellow-50/30 dark:from-orange-900/20 dark:via-amber-900/20 dark:to-yellow-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/5 via-amber-400/5 to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
+              <div>
+                <CardTitle className="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+                  Expense Tracking
+                </CardTitle>
+                <p className="text-orange-700 dark:text-orange-300 text-sm font-bold">💸 Cost Management</p>
+              </div>
+              <div className="flex gap-2">
                 <Button 
                   variant="ghost" 
                   size="sm"
                   onClick={() => refreshExpenses()}
                   disabled={expensesLoading}
-                  className="hover:bg-primary/10"
+                  className="hover:bg-orange-100 dark:hover:bg-orange-900/20 text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-orange-700 shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <RefreshCw className={`w-4 h-4 mr-1 ${expensesLoading ? 'animate-spin' : ''}`} />
                   Refresh
                 </Button>
                 <Button 
-                  variant="wealth" 
                   size="sm"
                   onClick={openExpenseForm}
-                  className="bg-gradient-wealth shadow-wealth hover:shadow-hover transition-all duration-300"
+                  className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:via-amber-600 hover:to-orange-700 text-white shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105 font-bold"
                 >
                   <Minus className="w-4 h-4 mr-1" />
-                  Add
+                  Add Expense
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3 max-h-96 overflow-y-auto">
+            <CardContent className="relative">
+              <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
                 {expensesLoading && apiExpenses.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <RefreshCw className="w-12 h-12 mx-auto mb-2 opacity-50 animate-spin" />
-                    <p className="text-sm font-semibold">Loading expenses...</p>
+                  <div className="text-center py-12">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-orange-400 rounded-full blur-xl opacity-20 animate-pulse"></div>
+                      <RefreshCw className="relative w-16 h-16 mx-auto mb-4 text-orange-400 animate-spin" />
+                    </div>
+                    <p className="text-orange-600 dark:text-orange-400 font-bold">Loading expenses...</p>
+                    <p className="text-orange-500 dark:text-orange-500 text-sm">Fetching your spending data</p>
                   </div>
                 )}
                 
                 {expensesError && apiExpenses.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <DollarSign className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm font-semibold text-destructive">Failed to load expenses</p>
+                  <div className="text-center py-12">
+                    <DollarSign className="w-16 h-16 mx-auto mb-4 text-red-400 opacity-60" />
+                    <p className="text-red-600 dark:text-red-400 font-bold mb-3">Failed to load expenses</p>
                     <Button 
                       variant="outline" 
                       size="sm"
                       onClick={() => refreshExpenses()}
-                      className="mt-2"
+                      className="border-orange-300 text-orange-600 hover:bg-orange-50 dark:border-orange-700 dark:text-orange-400 dark:hover:bg-orange-900/20"
                     >
+                      <RefreshCw className="w-4 h-4 mr-2" />
                       Try again
                     </Button>
                   </div>
                 )}
                 
                 {!expensesLoading && !expensesError && apiExpenses.map((expense) => (
-                  <div key={expense.expense_id} className="group flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-warning/5 to-warning/10 hover:from-warning/10 hover:to-warning/15 border border-warning/20 hover:border-warning/40 transition-all duration-300">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-semibold text-sm group-hover:text-warning transition-colors">{expense.description}</h4>
-                        <Badge 
-                          variant="outline"
-                          className="px-2 py-0 text-xs bg-warning/10 text-warning border-warning/30"
-                        >
-                          {expense.category}
-                        </Badge>
+                  <div key={expense.expense_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50/80 dark:from-orange-950/30 dark:via-amber-950/30 dark:to-orange-950/30 border border-orange-200/50 dark:border-orange-700/50 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/10 transform hover:-translate-y-1">
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400/5 to-amber-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative flex items-center justify-between p-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-amber-500 rounded-full animate-pulse"></div>
+                          <h4 className="font-bold text-slate-700 dark:text-slate-200 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors text-base">{expense.description}</h4>
+                          <Badge 
+                            variant="outline"
+                            className="px-2 py-1 text-xs bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/50 dark:to-amber-950/50 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-700 font-semibold"
+                          >
+                            {expense.category}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400">
+                          <Calendar className="w-3 h-3" />
+                          <span className="text-xs font-semibold">{new Date(expense.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="w-3 h-3" />
-                        <span>{new Date(expense.date).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric'
-                        })}</span>
+                      <div className="text-right">
+                        <div className="relative">
+                          <span className="text-xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                            -${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-lg font-bold text-warning">
-                        -${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                      </span>
                     </div>
                   </div>
                 ))}
                 
                 {!expensesLoading && !expensesError && apiExpenses.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <DollarSign className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm font-semibold">No expenses yet</p>
-                    <p className="text-xs">Add your first expense</p>
+                  <div className="text-center py-12">
+                    <div className="relative mb-6">
+                      <div className="absolute inset-0 bg-orange-400 rounded-full blur-xl opacity-10"></div>
+                      <DollarSign className="relative w-16 h-16 mx-auto text-orange-400 opacity-60" />
+                    </div>
+                    <p className="text-orange-600 dark:text-orange-400 font-bold text-lg mb-2">No expenses tracked yet</p>
+                    <p className="text-orange-500 dark:text-orange-500 text-sm mb-4">Start monitoring your spending patterns</p>
+                    <Button 
+                      onClick={openExpenseForm}
+                      className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg hover:shadow-orange-500/25 transition-all duration-300"
+                    >
+                      <Minus className="w-4 h-4 mr-2" />
+                      Add First Expense
+                    </Button>
                   </div>
                 )}
               </div>
