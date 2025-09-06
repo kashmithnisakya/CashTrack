@@ -96,15 +96,15 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
     <div className="space-y-4">
       {/* Chart Type Tabs */}
       <div className="flex items-center justify-between">
-        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+        <div className="flex bg-white/80 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-lg p-1 shadow-sm">
           <Button
             variant={activeView === 'trends' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => setActiveView('trends')}
             className={`text-xs font-semibold transition-all duration-300 ${
               activeView === 'trends' 
-                ? 'bg-white dark:bg-slate-700 shadow-sm' 
-                : 'hover:bg-white/50 dark:hover:bg-slate-700/50'
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                : 'hover:bg-blue-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300'
             }`}
           >
             <TrendingUp className="w-3 h-3 mr-1" />
@@ -116,8 +116,8 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
             onClick={() => setActiveView('categories')}
             className={`text-xs font-semibold transition-all duration-300 ${
               activeView === 'categories' 
-                ? 'bg-white dark:bg-slate-700 shadow-sm' 
-                : 'hover:bg-white/50 dark:hover:bg-slate-700/50'
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                : 'hover:bg-blue-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300'
             }`}
           >
             <PieChartIcon className="w-3 h-3 mr-1" />
@@ -129,8 +129,8 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
             onClick={() => setActiveView('comparison')}
             className={`text-xs font-semibold transition-all duration-300 ${
               activeView === 'comparison' 
-                ? 'bg-white dark:bg-slate-700 shadow-sm' 
-                : 'hover:bg-white/50 dark:hover:bg-slate-700/50'
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md' 
+                : 'hover:bg-blue-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300'
             }`}
           >
             <BarChart3 className="w-3 h-3 mr-1" />
@@ -147,7 +147,7 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
       </div>
 
       {/* Chart Content */}
-      <div className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-800/50 rounded-xl border border-slate-200/50 dark:border-slate-700/50 p-4">
+      <div className="bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/30 dark:from-slate-900/50 dark:to-slate-800/50 rounded-xl border border-blue-200/40 dark:border-slate-700/50 p-4 shadow-lg">
         {activeView === 'trends' && (
           <div>
             <div className="flex items-center justify-between mb-4">
@@ -215,7 +215,7 @@ export function ExpenseChart({ expenses }: ExpenseChartProps) {
                 {pieData.slice(0, 5).map((item, index) => {
                   const percentage = ((item.value / totalExpenses) * 100).toFixed(1);
                   return (
-                    <div key={index} className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                    <div key={index} className="flex items-center justify-between py-2 px-3 bg-white/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
                         <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{item.name}</span>

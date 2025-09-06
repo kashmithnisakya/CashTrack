@@ -194,8 +194,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* Portfolio Balance Card */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-blue-50/50 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
-            <div className={`absolute inset-0 bg-gradient-to-br ${balance >= 0 ? 'from-emerald-400/10 via-green-400/5 to-teal-400/10' : 'from-red-400/10 via-orange-400/5 to-pink-400/10'} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/40 dark:from-slate-800 dark:via-slate-700 dark:to-slate-600 border border-white/60 shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className={`absolute inset-0 bg-gradient-to-br ${balance >= 0 ? 'from-emerald-400/15 via-green-400/8 to-teal-400/15' : 'from-red-400/15 via-orange-400/8 to-pink-400/15'} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
             <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
               <div>
                 <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Portfolio Balance</CardTitle>
@@ -231,8 +231,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </Card>
 
           {/* Income Card */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-emerald-50/30 to-green-50/50 dark:from-slate-800 dark:via-emerald-900/20 dark:to-green-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-green-400/5 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-emerald-50/40 to-green-50/60 dark:from-slate-800 dark:via-emerald-900/20 dark:to-green-900/20 border border-emerald-100/80 shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-green-400/8 to-teal-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
               <div>
                 <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Total Income</CardTitle>
@@ -260,8 +260,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </Card>
 
           {/* Expenses Card */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-orange-50/30 to-amber-50/50 dark:from-slate-800 dark:via-orange-900/20 dark:to-amber-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 via-amber-400/5 to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-orange-50/40 to-amber-50/60 dark:from-slate-800 dark:via-orange-900/20 dark:to-amber-900/20 border border-orange-100/80 shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer transform hover:-translate-y-2">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/15 via-amber-400/8 to-yellow-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <CardHeader className="relative flex flex-row items-center justify-between pb-6 pt-8">
               <div>
                 <CardTitle className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">Total Expenses</CardTitle>
@@ -291,8 +291,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Chart */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-slate-50/50 to-indigo-50/30 dark:from-slate-800 dark:via-slate-700 dark:to-indigo-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-400/5 via-purple-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-blue-50/40 to-indigo-50/50 dark:from-slate-800 dark:via-slate-700 dark:to-indigo-900/20 border border-blue-100/60 shadow-xl hover:shadow-2xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-400/10 via-purple-400/8 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <CardHeader className="relative pb-8 pt-8">
               <div className="flex items-center justify-between">
                 <div>
@@ -315,8 +315,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </Card>
 
           {/* Income Section */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-green-50/50 to-teal-50/30 dark:from-emerald-900/20 dark:via-green-900/20 dark:to-teal-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/5 via-green-400/5 to-teal-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-emerald-50/60 to-green-50/40 dark:from-emerald-900/20 dark:via-green-900/20 dark:to-teal-900/20 border border-emerald-100/70 shadow-xl hover:shadow-2xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/12 via-green-400/8 to-teal-400/12 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
               <div>
                 <CardTitle className="text-2xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-2">
@@ -375,8 +375,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                 )}
                 
                 {!incomesLoading && !incomesError && apiIncomes.map((income) => (
-                  <div key={income.income_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-50 via-green-50 to-emerald-50/80 dark:from-emerald-950/30 dark:via-green-950/30 dark:to-emerald-950/30 border border-emerald-200/50 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-500 hover:shadow-lg hover:shadow-emerald-500/10 transform hover:-translate-y-1">
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/5 to-green-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div key={income.income_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white via-emerald-50/80 to-green-50/60 dark:from-emerald-950/30 dark:via-green-950/30 dark:to-emerald-950/30 border border-emerald-200/80 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-500 hover:shadow-lg hover:shadow-emerald-500/20 transform hover:-translate-y-1">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/8 to-green-400/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative flex items-center justify-between p-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
@@ -425,8 +425,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </Card>
 
           {/* Expenses Section */}
-          <Card className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-amber-50/50 to-yellow-50/30 dark:from-orange-900/20 dark:via-amber-900/20 dark:to-yellow-900/20 border-0 shadow-2xl hover:shadow-3xl transition-all duration-700 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/5 via-amber-400/5 to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <Card className="relative overflow-hidden bg-gradient-to-br from-white via-orange-50/60 to-amber-50/40 dark:from-orange-900/20 dark:via-amber-900/20 dark:to-yellow-900/20 border border-orange-100/70 shadow-xl hover:shadow-2xl transition-all duration-700 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/12 via-amber-400/8 to-yellow-400/12 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
               <div>
                 <CardTitle className="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
@@ -485,8 +485,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                 )}
                 
                 {!expensesLoading && !expensesError && apiExpenses.map((expense) => (
-                  <div key={expense.expense_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50/80 dark:from-orange-950/30 dark:via-amber-950/30 dark:to-orange-950/30 border border-orange-200/50 dark:border-orange-700/50 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/10 transform hover:-translate-y-1">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400/5 to-amber-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div key={expense.expense_id} className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white via-orange-50/80 to-amber-50/60 dark:from-orange-950/30 dark:via-amber-950/30 dark:to-orange-950/30 border border-orange-200/80 dark:border-orange-700/50 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-500 hover:shadow-lg hover:shadow-orange-500/20 transform hover:-translate-y-1">
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400/8 to-amber-400/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="relative flex items-center justify-between p-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
