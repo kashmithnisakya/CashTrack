@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse } from '@/types/api';
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse, ListExpensesRequest, ListExpensesResponse, IncomeRequest, AddIncomeResponse, ListIncomesRequest, ListIncomesResponse } from '@/types/api';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -152,6 +152,43 @@ class ApiService {
     return this.request<AddExpenseResponse>('/walker/add_expense', {
       method: 'POST',
       body: JSON.stringify(expenseData),
+    });
+  }
+
+  async listExpenses(params: ListExpensesRequest): Promise<ListExpensesResponse> {
+    console.log('📋 Listing expenses:', {
+      skip: params.skip,
+      limit: params.limit
+    });
+    
+    return this.request<ListExpensesResponse>('/walker/list_expenses', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  }
+
+  async addIncome(incomeData: IncomeRequest): Promise<AddIncomeResponse> {
+    console.log('💰 Adding income:', {
+      amount: incomeData.amount,
+      date: incomeData.date,
+      description: incomeData.description
+    });
+    
+    return this.request<AddIncomeResponse>('/walker/add_income', {
+      method: 'POST',
+      body: JSON.stringify(incomeData),
+    });
+  }
+
+  async listIncomes(params: ListIncomesRequest): Promise<ListIncomesResponse> {
+    console.log('📋 Listing incomes:', {
+      skip: params.skip,
+      limit: params.limit
+    });
+    
+    return this.request<ListIncomesResponse>('/walker/list_incomes', {
+      method: 'POST',
+      body: JSON.stringify(params),
     });
   }
 

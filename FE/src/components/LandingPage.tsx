@@ -159,7 +159,7 @@ export function LandingPage() {
             <div className="w-full max-w-lg">
               <Card className="glass-effect shadow-premium border-0 backdrop-blur-xl bg-white/95 dark:bg-black/90">
                 <CardHeader className="text-center pb-8">
-                  <CardTitle className="text-3xl font-bold gradient-text mb-2">Welcome to Wealth</CardTitle>
+                  <CardTitle className="text-3xl font-bold gradient-text mb-2">Welcome to CashTrack</CardTitle>
                   <CardDescription className="text-lg text-muted-foreground">
                     Join <span className="font-semibold text-primary">50,000+</span> users building financial freedom
                   </CardDescription>

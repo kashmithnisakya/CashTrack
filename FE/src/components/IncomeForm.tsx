@@ -3,55 +3,32 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X } from "lucide-react";
 import { apiService } from '@/services/api';
-import { ExpenseRequest } from '@/types/api';
-import type { Expense } from "./Dashboard";
+import { IncomeRequest } from '@/types/api';
 
-interface ExpenseFormProps {
-  expense?: Expense | null;
-  onSubmit: (expense: Omit<Expense, "id">) => void;
+interface IncomeFormProps {
   onCancel: () => void;
-  onExpenseAdded?: () => void; // Callback for when expense is successfully added
+  onIncomeAdded?: () => void;
 }
 
-const categories = [
-  "Food",
-  "Transportation",
-  "Entertainment",
-  "Shopping",
-  "Bills",
-  "Healthcare",
-  "Education",
-  "Other"
-];
-
-export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: ExpenseFormProps) {
-  const [title, setTitle] = useState("");
+export function IncomeForm({ onCancel, onIncomeAdded }: IncomeFormProps) {
+  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (expense) {
-      setTitle(expense.title);
-      setAmount(expense.amount.toString());
-      setCategory(expense.category);
-      setDate(expense.date);
-    } else {
-      // Set default date to today
-      setDate(new Date().toISOString().split('T')[0]);
-    }
-  }, [expense]);
+    // Set default date to today
+    setDate(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     
-    if (!title || !amount || !category || !date) {
+    if (!description || !amount || !date) {
       setError('All fields are required');
       return;
     }
@@ -65,45 +42,31 @@ export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: Exp
     setIsSubmitting(true);
 
     try {
-      // If this is a new expense (not editing), call the API
-      if (!expense) {
-        const expenseRequest: ExpenseRequest = {
-          amount: amountNum,
-          category,
-          date: new Date(date).toISOString(),
-          description: title
-        };
+      const incomeRequest: IncomeRequest = {
+        amount: amountNum,
+        date: new Date(date).toISOString(),
+        description: description
+      };
 
-        console.log('📝 Adding expense via API:', expenseRequest);
-        const response = await apiService.addExpense(expenseRequest);
-        console.log('✅ Expense added successfully:', response);
+      console.log('📝 Adding income via API:', incomeRequest);
+      const response = await apiService.addIncome(incomeRequest);
+      console.log('✅ Income added successfully:', response);
 
-        // Call success callback
-        if (onExpenseAdded) {
-          onExpenseAdded();
-        }
-      } else {
-        // For editing, use the existing mock functionality
-        onSubmit({
-          title,
-          amount: amountNum,
-          category,
-          date,
-          type: "expense"
-        });
+      // Call success callback
+      if (onIncomeAdded) {
+        onIncomeAdded();
       }
 
       // Reset form
-      setTitle("");
+      setDescription("");
       setAmount("");
-      setCategory("");
       setDate(new Date().toISOString().split('T')[0]);
       
       onCancel(); // Close the form
 
     } catch (error: unknown) {
-      console.error('❌ Error adding expense:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to add expense. Please try again.';
+      console.error('❌ Error adding income:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to add income. Please try again.';
       setError(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -115,7 +78,7 @@ export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: Exp
       <Card className="w-full max-w-lg shadow-premium hover:shadow-hover transition-all duration-500 border-0 bg-gradient-card">
         <CardHeader className="flex flex-row items-center justify-between pb-6">
           <CardTitle className="text-2xl font-bold gradient-text">
-            {expense ? "Edit Expense" : "Add New Expense"}
+            Add New Income
           </CardTitle>
           <Button variant="ghost" size="icon" onClick={onCancel} className="hover:bg-destructive/10 hover:text-destructive rounded-full">
             <X className="w-5 h-5" />
@@ -124,13 +87,13 @@ export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: Exp
         <CardContent className="px-8 pb-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-sm font-semibold text-foreground/80">Expense Description</Label>
+              <Label htmlFor="description" className="text-sm font-semibold text-foreground/80">Income Description</Label>
               <Input
-                id="title"
+                id="description"
                 type="text"
-                placeholder="e.g., Grocery Shopping, Coffee, Gas"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g., Salary, Freelance, Investment Returns"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300"
                 required
               />
@@ -151,27 +114,7 @@ export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: Exp
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category" className="text-sm font-semibold text-foreground/80">Category</Label>
-              <Select value={category} onValueChange={setCategory} required>
-                <SelectTrigger className="h-12 rounded-xl border-2 focus:border-primary transition-all duration-300">
-                  <SelectValue placeholder="Choose a category" />
-                </SelectTrigger>
-                <SelectContent className="rounded-xl border-2">
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat} className="rounded-lg font-medium">
-                      {cat === 'Food' && '🍽️'} {cat === 'Transportation' && '🚗'} 
-                      {cat === 'Entertainment' && '🎬'} {cat === 'Shopping' && '🛍️'} 
-                      {cat === 'Bills' && '📄'} {cat === 'Healthcare' && '🏥'} 
-                      {cat === 'Education' && '📚'} {cat === 'Income' && '💰'} 
-                      {cat === 'Other' && '📦'} {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="date" className="text-sm font-semibold text-foreground/80">Expense Date</Label>
+              <Label htmlFor="date" className="text-sm font-semibold text-foreground/80">Income Date</Label>
               <Input
                 id="date"
                 type="date"
@@ -202,18 +145,18 @@ export function ExpenseForm({ expense, onSubmit, onCancel, onExpenseAdded }: Exp
               </Button>
               <Button 
                 type="submit" 
-                variant="wealth"
+                variant="success"
                 size="lg"
-                className="flex-1 h-12 rounded-xl font-bold bg-gradient-wealth shadow-wealth hover:shadow-hover"
+                className="flex-1 h-12 rounded-xl font-bold bg-gradient-to-r from-success to-success/80 hover:from-success/90 hover:to-success/70"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-current/30 border-t-current rounded-full animate-spin mr-2" />
-                    Adding Expense...
+                    Adding Income...
                   </>
                 ) : (
-                  <>💸 {expense ? "Update Expense" : "Add Expense"}</>
+                  <>💰 Add Income</>
                 )}
               </Button>
             </div>

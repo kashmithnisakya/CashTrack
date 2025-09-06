@@ -37,3 +37,18 @@ walker add_expense(visit_expenses) {
     can add_expense with expenses entry;
     can update_expense with expense entry;
 }
+
+walker list_expenses(visit_expenses) {
+    has skip: int = 0;
+    has limit: int = 10;
+    has expenses_list: list = [];
+
+    class __specs__ {
+        has tags: list = ["Expense APIs"];
+        has summary: str = "List Expenses";
+        has response_model: type = list[dict];
+    }
+
+    can go_to_expenses with expenses entry;
+    can list_expenses with expense entry;
+}

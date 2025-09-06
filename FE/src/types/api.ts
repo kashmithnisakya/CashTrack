@@ -69,3 +69,49 @@ export interface AddExpenseResponse {
     expense: Expense;
   }>;
 }
+
+// List Expenses Types
+export interface ListExpensesRequest {
+  skip: number;
+  limit: number;
+}
+
+export interface ListExpensesResponse {
+  status: number;
+  reports: Expense[];
+}
+
+// Income Types
+export interface IncomeRequest {
+  amount: number;
+  date: string; // ISO string format
+  description: string;
+}
+
+export interface Income {
+  income_id: string;
+  amount: number;
+  date: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AddIncomeResponse {
+  status: number;
+  reports: Array<{
+    message: string;
+    income: Income;
+  }>;
+}
+
+// List Incomes Types
+export interface ListIncomesRequest {
+  skip: number;
+  limit: number;
+}
+
+export interface ListIncomesResponse {
+  status: number;
+  reports: Income[];
+}
