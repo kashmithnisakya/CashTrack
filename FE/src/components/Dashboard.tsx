@@ -19,8 +19,10 @@ import {
 import { ExpenseForm } from "./ExpenseForm";
 import { IncomeForm } from "./IncomeForm";
 import { ExpenseChart } from "./ExpenseChart";
+import { ProfileForm } from "./ProfileForm";
 import { useExpenses } from "@/hooks/use-expenses";
 import { useIncomes } from "@/hooks/use-incomes";
+import { useProfile } from "@/hooks/use-profile";
 import { Expense as ApiExpense, Income as ApiIncome } from "@/types/api";
 
 export interface Expense {
@@ -56,7 +58,14 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
 
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [showIncomeForm, setShowIncomeForm] = useState(false);
+  const [showProfileForm, setShowProfileForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+
+  const { 
+    profile, 
+    loading: profileLoading, 
+    updateProfile 
+  } = useProfile();
 
   // Convert API data to local format and combine expenses and incomes
   const expenses: Expense[] = [
@@ -194,11 +203,21 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
             </div>
             
             <div className="flex items-center gap-6">
-              <div className="relative bg-white/10 backdrop-blur-md rounded-xl px-6 py-3 border border-white/20 shadow-lg">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 rounded-xl"></div>
+              <div className="relative bg-white/10 backdrop-blur-md rounded-xl px-6 py-3 border border-white/20 shadow-lg group cursor-pointer"
+                   onClick={() => setShowProfileForm(true)}>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 rounded-xl group-hover:from-white/10 group-hover:to-white/15 transition-all duration-300"></div>
                 <div className="relative text-white text-right">
-                  <p className="font-bold text-lg tracking-wide">{user.name}</p>
-                  <p className="text-sm text-white/80 font-medium">{user.email}</p>
+                  <div className="flex items-center gap-2 justify-end">
+                    <div>
+                      <p className="font-bold text-lg tracking-wide">
+                        {profile ? `${profile.first_name} ${profile.last_name}` : user.name}
+                      </p>
+                      <p className="text-sm text-white/80 font-medium">
+                        {profile ? profile.email : user.email}
+                      </p>
+                    </div>
+                    <Edit className="w-4 h-4 opacity-0 group-hover:opacity-70 transition-opacity duration-300" />
+                  </div>
                 </div>
               </div>
               <ThemeToggle />
@@ -601,6 +620,16 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         <IncomeForm
           onCancel={() => setShowIncomeForm(false)}
           onIncomeAdded={handleIncomeAdded}
+        />
+      )}
+
+      {/* Profile Form Modal */}
+      {showProfileForm && (
+        <ProfileForm
+          profile={profile}
+          onSubmit={updateProfile}
+          onCancel={() => setShowProfileForm(false)}
+          loading={profileLoading}
         />
       )}
     </div>

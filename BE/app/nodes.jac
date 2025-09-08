@@ -23,3 +23,10 @@ node income {
     has created_at: datetime = datetime.now();
     has updated_at: datetime = datetime.now();
 }
+
+node profile {
+    has email: str = "";
+    has first_name: str = "";
+    has last_name: str = "";
+    has profile_picture_url: str = "";
+}

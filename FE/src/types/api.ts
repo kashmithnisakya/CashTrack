@@ -139,3 +139,33 @@ export interface DeleteIncomeResponse {
     message: string;
   }>;
 }
+
+// Profile Types
+export interface Profile {
+  email: string;
+  first_name: string;
+  last_name: string;
+  profile_picture_url: string;
+}
+
+export interface UpdateProfileRequest {
+  first_name: string;
+  last_name: string;
+}
+
+export interface UpdateProfileResponse {
+  status: number;
+  reports: Array<{
+    message: string;
+    profile: Profile;
+  }>;
+}
+
+export interface GetProfileRequest {
+  [key: string]: never; // Empty payload
+}
+
+export interface GetProfileResponse {
+  status: number;
+  reports: Profile[];
+}

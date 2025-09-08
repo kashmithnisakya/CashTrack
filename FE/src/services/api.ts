@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse, ListExpensesRequest, ListExpensesResponse, DeleteExpenseRequest, DeleteExpenseResponse, IncomeRequest, AddIncomeResponse, ListIncomesRequest, ListIncomesResponse, DeleteIncomeRequest, DeleteIncomeResponse } from '@/types/api';
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse, ListExpensesRequest, ListExpensesResponse, DeleteExpenseRequest, DeleteExpenseResponse, IncomeRequest, AddIncomeResponse, ListIncomesRequest, ListIncomesResponse, DeleteIncomeRequest, DeleteIncomeResponse, UpdateProfileRequest, UpdateProfileResponse, GetProfileResponse } from '@/types/api';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -214,8 +214,29 @@ class ApiService {
     });
   }
 
+  // Profile endpoints
+  async getProfile(): Promise<GetProfileResponse> {
+    console.log('👤 Getting user profile');
+    
+    return this.request<GetProfileResponse>('/walker/get_profile', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+  }
+
+  async updateProfile(profileData: UpdateProfileRequest): Promise<UpdateProfileResponse> {
+    console.log('✏️ Updating profile:', {
+      first_name: profileData.first_name,
+      last_name: profileData.last_name
+    });
+    
+    return this.request<UpdateProfileResponse>('/walker/update_profile', {
+      method: 'POST',
+      body: JSON.stringify(profileData),
+    });
+  }
+
   // Future endpoints can be added here
-  // async getUserProfile(token: string): Promise<ApiUser> { ... }
   // async refreshToken(token: string): Promise<LoginResponse> { ... }
 }
 

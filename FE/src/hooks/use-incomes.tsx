@@ -43,7 +43,7 @@ export function useIncomes(options: UseIncomesOptions = {}): UseIncomesReturn {
       const response: ListIncomesResponse = await apiService.listIncomes(params);
       
       if (response.status === 200) {
-        const newIncomes = response.reports;
+        const newIncomes = response.reports || [];
         
         if (skip === 0) {
           // Fresh fetch - replace all incomes
@@ -75,8 +75,8 @@ export function useIncomes(options: UseIncomesOptions = {}): UseIncomesReturn {
 
   const loadMore = useCallback(async () => {
     if (!hasMore || loading) return;
-    await fetchIncomes(incomes.length, limit);
-  }, [fetchIncomes, incomes.length, hasMore, loading, limit]);
+    await fetchIncomes(incomes?.length || 0, limit);
+  }, [fetchIncomes, incomes?.length, hasMore, loading, limit]);
 
   const refresh = useCallback(async () => {
     await fetchIncomes(0, limit);

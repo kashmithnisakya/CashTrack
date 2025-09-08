@@ -43,7 +43,7 @@ export function useExpenses(options: UseExpensesOptions = {}): UseExpensesReturn
       const response: ListExpensesResponse = await apiService.listExpenses(params);
       
       if (response.status === 200) {
-        const newExpenses = response.reports;
+        const newExpenses = response.reports || [];
         
         if (skip === 0) {
           // Fresh fetch - replace all expenses
@@ -75,8 +75,8 @@ export function useExpenses(options: UseExpensesOptions = {}): UseExpensesReturn
 
   const loadMore = useCallback(async () => {
     if (!hasMore || loading) return;
-    await fetchExpenses(expenses.length, limit);
-  }, [fetchExpenses, expenses.length, hasMore, loading, limit]);
+    await fetchExpenses(expenses?.length || 0, limit);
+  }, [fetchExpenses, expenses?.length, hasMore, loading, limit]);
 
   const refresh = useCallback(async () => {
     await fetchExpenses(0, limit);
