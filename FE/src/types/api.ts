@@ -115,3 +115,27 @@ export interface ListIncomesResponse {
   status: number;
   reports: Income[];
 }
+
+// Delete Expense Types
+export interface DeleteExpenseRequest {
+  expense_id: string;
+}
+
+export interface DeleteExpenseResponse {
+  status: number;
+  reports: Array<{
+    message: string;
+  }>;
+}
+
+// Delete Income Types
+export interface DeleteIncomeRequest {
+  income_id: string;
+}
+
+export interface DeleteIncomeResponse {
+  status: number;
+  reports: Array<{
+    message: string;
+  }>;
+}

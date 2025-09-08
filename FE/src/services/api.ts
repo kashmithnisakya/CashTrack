@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse, ListExpensesRequest, ListExpensesResponse, IncomeRequest, AddIncomeResponse, ListIncomesRequest, ListIncomesResponse } from '@/types/api';
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ApiError, ExpenseRequest, AddExpenseResponse, ListExpensesRequest, ListExpensesResponse, DeleteExpenseRequest, DeleteExpenseResponse, IncomeRequest, AddIncomeResponse, ListIncomesRequest, ListIncomesResponse, DeleteIncomeRequest, DeleteIncomeResponse } from '@/types/api';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -167,6 +167,17 @@ class ApiService {
     });
   }
 
+  async deleteExpense(params: DeleteExpenseRequest): Promise<DeleteExpenseResponse> {
+    console.log('🗑️ Deleting expense:', {
+      expense_id: params.expense_id
+    });
+    
+    return this.request<DeleteExpenseResponse>('/walker/delete_expense', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  }
+
   async addIncome(incomeData: IncomeRequest): Promise<AddIncomeResponse> {
     console.log('💰 Adding income:', {
       amount: incomeData.amount,
@@ -187,6 +198,17 @@ class ApiService {
     });
     
     return this.request<ListIncomesResponse>('/walker/list_incomes', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  }
+
+  async deleteIncome(params: DeleteIncomeRequest): Promise<DeleteIncomeResponse> {
+    console.log('🗑️ Deleting income:', {
+      income_id: params.income_id
+    });
+    
+    return this.request<DeleteIncomeResponse>('/walker/delete_income', {
       method: 'POST',
       body: JSON.stringify(params),
     });

@@ -64,3 +64,30 @@ impl list_incomes.list_incomes with income entry {
     self.incomes_list.append(income_details);
     report income_details;
 }
+
+impl delete_income.delete_income with incomes entry {
+    logger.debug(f"incomes | delete_income | Deleting Income: {self.income_id}");
+    income_node = [-->](?income_id == self.income_id);
+    if (len(income_node) == 0) {
+        logger.warning(f"incomes | delete_income | Income with ID {self.income_id} not found");
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Income with ID {self.income_id} not found"
+        );
+    } else {
+        del income_node[0];
+        income_node = [-->](?income_id == self.income_id);
+        if (len(income_node) != 0) {
+            logger.error(f"incomes | delete_income | Failed to delete Income with ID {self.income_id}");
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Failed to delete Income with ID {self.income_id}"
+            );
+        }
+        logger.debug(f"incomes | delete_income | Deleted Income with ID {self.income_id}");
+        response = {
+            "message": f"Income with ID {self.income_id} deleted successfully!"
+        };
+        report response;
+    }
+}

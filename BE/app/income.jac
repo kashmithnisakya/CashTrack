@@ -41,3 +41,14 @@ walker list_incomes(visit_incomes) {
     can go_to_incomes with incomes entry;
     can list_incomes with income entry;
 }
+
+walker delete_income(visit_incomes) {
+    has income_id: str;
+
+    class __specs__ {
+        has tags: list = ["Income APIs"];
+        has summary: str = "Delete Income";
+    }
+
+    can delete_income with incomes entry;
+}

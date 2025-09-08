@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '@/services/api';
-import { Income, ListIncomesRequest, ListIncomesResponse } from '@/types/api';
+import { Income, ListIncomesRequest, ListIncomesResponse, DeleteIncomeRequest } from '@/types/api';
 import { useToast } from '@/hooks/use-toast';
 
 interface UseIncomesOptions {
@@ -17,6 +17,7 @@ interface UseIncomesReturn {
   fetchIncomes: (skip?: number, limit?: number) => Promise<void>;
   loadMore: () => Promise<void>;
   refresh: () => Promise<void>;
+  deleteIncome: (incomeId: string) => Promise<void>;
 }
 
 export function useIncomes(options: UseIncomesOptions = {}): UseIncomesReturn {
@@ -81,6 +82,37 @@ export function useIncomes(options: UseIncomesOptions = {}): UseIncomesReturn {
     await fetchIncomes(0, limit);
   }, [fetchIncomes, limit]);
 
+  const deleteIncome = useCallback(async (incomeId: string) => {
+    try {
+      const params: DeleteIncomeRequest = {
+        income_id: incomeId
+      };
+
+      const response = await apiService.deleteIncome(params);
+      
+      if (response.status === 200) {
+        toast({
+          title: "Success",
+          description: "Income deleted successfully",
+          variant: "default",
+        });
+        // Note: Dashboard will handle refreshing all data
+      }
+    } catch (err: any) {
+      const errorMessage = err?.message || 'Failed to delete income';
+      setError(errorMessage);
+      
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      
+      console.error('Failed to delete income:', err);
+      throw err; // Re-throw so Dashboard can handle the error
+    }
+  }, [toast]);
+
   // Auto-fetch on mount if enabled
   useEffect(() => {
     if (autoFetch) {
@@ -96,6 +128,7 @@ export function useIncomes(options: UseIncomesOptions = {}): UseIncomesReturn {
     hasMore,
     fetchIncomes,
     loadMore,
-    refresh
+    refresh,
+    deleteIncome
   };
 }

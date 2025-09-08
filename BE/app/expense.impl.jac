@@ -67,3 +67,30 @@ impl list_expenses.list_expenses with expense entry {
     self.expenses_list.append(expense_details);
     report expense_details;
 }
+
+impl delete_expense.delete_expense with expense entry {
+    logger.debug(f"expenses | delete_expense | Deleting Expense: {self.expense_id}");
+    expense_node = [-->](?expense_id == self.expense_id);
+    if (len(expense_node) == 0) {
+        logger.warning(f"expenses | delete_expense | Expense with ID {self.expense_id} not found");
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Expense with ID {self.expense_id} not found"
+        );
+    } else {
+        del expense_node[0];
+        expense_node = [-->](?expense_id == self.expense_id);
+        if (len(expense_node) != 0) {
+            logger.error(f"expenses | delete_expense | Failed to delete Expense with ID {self.expense_id}");
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Failed to delete Expense with ID {self.expense_id}"
+            );
+        }
+        logger.debug(f"expenses | delete_expense | Deleted Expense with ID {self.expense_id}");
+        response = {
+            "message": f"Expense with ID {self.expense_id} deleted successfully!"
+        };
+        report response;
+    }
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '@/services/api';
-import { Expense, ListExpensesRequest, ListExpensesResponse } from '@/types/api';
+import { Expense, ListExpensesRequest, ListExpensesResponse, DeleteExpenseRequest } from '@/types/api';
 import { useToast } from '@/hooks/use-toast';
 
 interface UseExpensesOptions {
@@ -17,6 +17,7 @@ interface UseExpensesReturn {
   fetchExpenses: (skip?: number, limit?: number) => Promise<void>;
   loadMore: () => Promise<void>;
   refresh: () => Promise<void>;
+  deleteExpense: (expenseId: string) => Promise<void>;
 }
 
 export function useExpenses(options: UseExpensesOptions = {}): UseExpensesReturn {
@@ -81,6 +82,37 @@ export function useExpenses(options: UseExpensesOptions = {}): UseExpensesReturn
     await fetchExpenses(0, limit);
   }, [fetchExpenses, limit]);
 
+  const deleteExpense = useCallback(async (expenseId: string) => {
+    try {
+      const params: DeleteExpenseRequest = {
+        expense_id: expenseId
+      };
+
+      const response = await apiService.deleteExpense(params);
+      
+      if (response.status === 200) {
+        toast({
+          title: "Success",
+          description: "Expense deleted successfully",
+          variant: "default",
+        });
+        // Note: Dashboard will handle refreshing all data
+      }
+    } catch (err: any) {
+      const errorMessage = err?.message || 'Failed to delete expense';
+      setError(errorMessage);
+      
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      
+      console.error('Failed to delete expense:', err);
+      throw err; // Re-throw so Dashboard can handle the error
+    }
+  }, [toast]);
+
   // Auto-fetch on mount if enabled
   useEffect(() => {
     if (autoFetch) {
@@ -96,6 +128,7 @@ export function useExpenses(options: UseExpensesOptions = {}): UseExpensesReturn
     hasMore,
     fetchExpenses,
     loadMore,
-    refresh
+    refresh,
+    deleteExpense
   };
 }

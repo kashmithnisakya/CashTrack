@@ -52,3 +52,14 @@ walker list_expenses(visit_expenses) {
     can go_to_expenses with expenses entry;
     can list_expenses with expense entry;
 }
+
+walker delete_expense(visit_expenses) {
+    has expense_id: str;
+
+    class __specs__ {
+        has tags: list = ["Expense APIs"];
+        has summary: str = "Delete Expense";
+    }
+
+    can delete_expense with expenses entry;
+}

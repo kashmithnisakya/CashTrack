@@ -42,14 +42,16 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     expenses: apiExpenses, 
     loading: expensesLoading, 
     error: expensesError, 
-    refresh: refreshExpenses 
+    refresh: refreshExpenses,
+    deleteExpense
   } = useExpenses({ limit: 20 });
 
   const { 
     incomes: apiIncomes, 
     loading: incomesLoading, 
     error: incomesError, 
-    refresh: refreshIncomes 
+    refresh: refreshIncomes,
+    deleteIncome
   } = useIncomes({ limit: 20 });
 
   const [showExpenseForm, setShowExpenseForm] = useState(false);
@@ -134,6 +136,30 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     console.log('💰 Income successfully added to backend! Refreshing lists...');
     refresh();
     setShowIncomeForm(false);
+  };
+
+  const handleExpenseDeleted = async (expenseId: string) => {
+    try {
+      await deleteExpense(expenseId);
+      // Refresh all dashboard data after successful deletion
+      console.log('🗑️ Expense successfully deleted! Refreshing dashboard...');
+      refresh();
+    } catch (error) {
+      console.error('Failed to delete expense:', error);
+      // Error is already handled in the hook
+    }
+  };
+
+  const handleIncomeDeleted = async (incomeId: string) => {
+    try {
+      await deleteIncome(incomeId);
+      // Refresh all dashboard data after successful deletion
+      console.log('🗑️ Income successfully deleted! Refreshing dashboard...');
+      refresh();
+    } catch (error) {
+      console.error('Failed to delete income:', error);
+      // Error is already handled in the hook
+    }
   };
 
   const openExpenseForm = () => {
@@ -320,9 +346,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
             <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
               <div>
                 <CardTitle className="text-2xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-2">
-                  Income Stream
+                  Income
                 </CardTitle>
-                <p className="text-emerald-700 dark:text-emerald-300 text-sm font-bold">💰 Revenue Sources</p>
               </div>
               <div className="flex gap-2">
                 <Button 
@@ -392,12 +417,22 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                           })}</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="relative">
-                          <span className="text-xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
-                            +${income.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                          </span>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <div className="relative">
+                            <span className="text-xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                              +${income.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                            </span>
+                          </div>
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleIncomeDeleted(income.income_id)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-red-100 dark:hover:bg-red-900/20 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 p-2"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -430,9 +465,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
             <CardHeader className="relative flex flex-row items-center justify-between pb-8 pt-8">
               <div>
                 <CardTitle className="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
-                  Expense Tracking
+                  Expenses
                 </CardTitle>
-                <p className="text-orange-700 dark:text-orange-300 text-sm font-bold">💸 Cost Management</p>
               </div>
               <div className="flex gap-2">
                 <Button 
@@ -508,12 +542,22 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                           })}</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="relative">
-                          <span className="text-xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                            -${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                          </span>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <div className="relative">
+                            <span className="text-xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                              -${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                            </span>
+                          </div>
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleExpenseDeleted(expense.expense_id)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-red-100 dark:hover:bg-red-900/20 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 p-2"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
                   </div>
